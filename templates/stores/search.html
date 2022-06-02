@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %} Welcome :: Index {% endblock title %}
+{% block content %}
+
+
+<!-- display products -->
+<section id="featured" class="py-4 my-3">
+  <div class="container">
+      <!-- intro -->
+     <div class="intro mb-5">
+      <h2 class="text-center">
+          <span>&#8668;</span> Products <span>&#8669;</span>
+      </h2>
+     </div>
+     <!-- product list -->
+     <div class="row">
+      {% if show %}
+        {% for item in show  %}
+          <div class="col-md-6">
+              <img src="{{item.image.url}}" class="img-fluid" alt="">
+          </div>
+          <div class="col-md-6">
+              <h1>{{item.title}}</h1>
+              <p>{{item.description | truncatewords:20 }}</p>
+          </div>
+          <hr>
+        {% endfor %}
+      {% else %}
+        <p class="p-3 bg-danger text-white">No Products available</p>
+      {% endif %}
+            
+  </div>
+  </div>
+</section>
+
+
+{% endblock content %}
+
+

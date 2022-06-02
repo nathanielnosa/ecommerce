@@ -1,0 +1,107 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: My Cart {% endblock title %}
+{% block content %}
+
+
+<section id="product" class="py-5 my-5">
+    <div class="container">
+        <!-- breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Shopping Cart</li>
+          </ol>
+        </nav>
+        <hr>
+        <!-- shopping cart-->
+          <h3 class="display-4">Shopping Cart</h3>
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>Remove</th>
+                <th>Image</th>
+                <th>Product Name</th>
+                <th>Unit Price</th>
+                <th>Quantity</th>
+                <th>Subtotal</th>
+              </tr>
+            </thead>
+            <tbody>
+                {% if cart %}
+                {% for items in cart.cartproduct_set.all  %}
+                <tr>
+                    <td>
+                      <a href="{% url 'manageCart' items.id %}?action=rmv "><i class="bi bi-trash"></i></a>
+                    </td>
+                    <td>
+                      <img src="{{items.product.image.url}}" width="100" alt="" class="img-fluid">
+                    </td>
+                    <td>{{items.product.title}}</td>
+                    <td>&#8358; {{items.rate | intcomma}}</td>
+                    <td> <a href="{% url 'manageCart' items.id %}?action=dcr"><i class="bi bi-dash-circle-fill"></i> </a>{{items.quantity}} <a href="{% url 'manageCart' items.id %}?action=inc"> <i class="bi bi-plus-circle-fill"></i></a></td>
+                    <td><strong>{{items.subtotal | intcomma}}</strong></td>
+                </tr>
+                {% endfor %}
+                <tr>
+                    <th>Total: {{cart.total | intcomma}}</th>
+                </tr>
+                {% else %}
+                  <p class="bg-danger p-4 text-white">No Item or cart available</p>
+                {% endif %}
+                
+
+              
+              
+              <!-- for later -->
+              <tr>
+                <td colspan="2">
+                  <div class="d-grid">
+                    <a href="{% url 'index' %}" class="btn btn-outline-danger">
+                      Continue To Shopping
+                    </a>
+                  </div>
+                </td>
+                <td colspan="2">
+                  <div class="d-grid">
+                    {% if cart.cartproduct_set.all %} 
+                    <a href="{% url 'emptyCart' %}" class="btn btn-outline-danger">
+                        Clear Shopping Cart
+                    </a>
+                    {% else %}
+                    <button type="button" class="btn btn-outline-danger" disabled>
+                        Clear Shopping Cart
+                    </button>
+                    {% endif %}
+                    
+                  </div>
+                </td>
+                <td colspan="2">
+                  <div class="d-grid">
+                    {% if cart.cartproduct_set.all %} 
+                    <a href="{% url 'checkout' %}" class="btn btn-outline-danger">
+                        Proceed To Checkout
+                    </a>
+                    {% else %}
+                    <button type="button" class="btn btn-outline-danger" disabled>
+                        Proceed To Checkout
+                    </button>
+                    {% endif %}
+                    
+                  </div>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+
+    </div>
+  </section>
+
+
+
+{% endblock content %}
+
+
+

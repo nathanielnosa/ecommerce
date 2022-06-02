@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: Index {% endblock title %}
+{% block content %}
+
+<section id="product" class="py-5 my-5">
+    <div class="container">
+        <!-- breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Product Page</li>
+          </ol>
+        </nav>
+        <hr>
+        <!-- single product -->
+
+        {% if categorys %}
+            {% for cat in categorys  %}
+              <h3>{{cat.title}}</h3>
+              <div class="row my-4">
+              {% for item in cat.product_set.all  %}
+                    <div class="col-md-4">
+                        <a href="{% url 'singleproduct' item.slug %}">
+                            <div class="card text-center">
+                                <img src="{{item.image.url}}" class="img-fluid" alt="">
+                                <h4>{{item.title}}</h4>
+                                {% if item.discount_price %}
+                                &#8358; {{item.discount_price}} <del> &#8358; {{item.price}}</del>
+                                {% else %}
+                                &#8358; {{item.price}}
+                                {% endif %}
+                                
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+                
+            {% endfor %}
+        {% else %}
+          <p class="bg-danger p-3 text-white">No Product</p>
+        {% endif %}
+        
+
+    </div>
+  </section>
+
+
+
+{% endblock content %}
+
+

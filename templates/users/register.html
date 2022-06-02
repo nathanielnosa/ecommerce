@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: Register {% endblock title %}
+{% block content %}
+
+    <div class="container my-4">
+        <div class="row">
+            <div class="col-md-6 mx-auto">
+                <div class="card p-3">
+                    <div class="card-head text-center fw-bold">Register Here</div>
+                    <div class="card-body">
+                        <form action="" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                                {{form}}
+                            <div class="d-grid my-2">
+                                <button type="submit" class="btn btn-success">Register</button>
+                            </div>
+                            <a class="text-danger" href="{% url 'login' %}{% if request.GET.next%}?next={{request.GET.next}}{% endif %}">Have an account already ? Login</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}
+
+

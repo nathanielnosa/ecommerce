@@ -1,0 +1,110 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: Index {% endblock title %}
+{% block content %}
+
+
+<!-- swiper banner -->
+<div class="swiper banner">
+    <div class="swiper-wrapper">
+     
+     {% if sliders %}
+       {% for slider in sliders %}
+       <div class="swiper-slide">
+            <img src="{{slider.image.url}}" alt="">
+        </div>
+       {% endfor %}
+     {% else %}
+       <p class="bg-danger p-4 my-4 text-white">No Slider Available</p>
+     {% endif %}
+     
+    </div>
+    <div class="swiper-button-next"></div>
+    <div class="swiper-button-prev"></div>
+</div>
+
+<!-- display products -->
+<section id="featured" class="py-4 my-3">
+  <div class="container">
+      <!-- intro -->
+     <div class="intro mb-5">
+      <h2 class="text-center">
+          <span>&#8668;</span> Products <span>&#8669;</span>
+      </h2>
+     </div>
+     <!-- end of slider -->
+
+     <!-- product list -->
+     <div class="row">
+      {% if paginator %}
+        {% for product in paginator  %}
+        <div class="col-12 col-md-3">
+          <a href="{% url 'singleproduct' product.slug %}">
+              <div class="product">
+                  <img src="{{product.image.url}}" alt="" class="img-fluid">
+                  <h5>{{product.title}}</h5>
+                  <h6>{% if product.discount_price %}
+                    &#8358; {{product.discount_price | intcomma }} <del>&#8358; {{product.price | intcomma }}</del>
+                    {% else %}
+                    &#8358; {{product.price | intcomma }}
+                    {% endif %}</h6>
+                  <div class="stars">
+                      views <b>{{product.view_count}}</b>
+                  </div>
+                  <a href="{% url 'addtocart' product.id %}" class="btn">ADD TO CART</a>
+              </div>
+          </a>
+        </div>
+        {% endfor %}
+        <!-- paginator -->
+          <div class="col-md-5 mx-auto my-3">
+            <nav aria-label="...">
+              <ul class="pagination">
+                {% if paginator.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ paginators.previous_page_number}}" >Previous</a>
+                </li>                  
+                {% else %}
+                <li class="page-item disabled">
+                  <span class="page-link">Previous</span>
+                </li> 
+                {% endif %}
+
+                {% for i in paginator.paginator.page_range %}
+                  {% if i == paginator.number %}
+                  <li class="page-item active"><a class="page-link">{{i}}</a></li>
+                  {% else %}
+                  <li class="page-item"><a class="page-link" href="?page={{i}}">{{i}}</a></li>
+                  {% endif %}
+                {% endfor %}
+
+                {% if paginator.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ paginators.next_page_number}}" >Next</a>
+                </li>
+                {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#">Next</a>
+                </li>
+                {% endif %}
+                
+                
+              </ul>
+            </nav>
+
+          </div>
+        <!-- end paginator -->
+      {% else %}
+        <p class="p-3 bg-danger text-white">No Products available</p>
+      {% endif %}
+      
+      
+  </div>
+  </div>
+</section>
+
+
+{% endblock content %}
+
+

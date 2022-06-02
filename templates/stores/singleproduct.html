@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: Index {% endblock title %}
+{% block content %}
+
+<section id="product" class="py-5 my-5">
+    <div class="container">
+        <!-- breadcrumb -->
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page"><a href="{% url 'index' %}">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Single Product</li>
+            <li class="breadcrumb-item active" aria-current="page">{{product.title}}</li>
+          </ol>
+        </nav>
+        <hr>
+        <!-- single product -->
+
+        {% if product %}
+        <div class="row">
+            <div class="col-12 col-md-6">
+              <img src="{{product.image.url}}" class="img-fluid" alt="">
+            </div>
+            <div class="col-12 col-md-6">
+              <h3>{{product.title}}</h3>
+              <hr>
+              <p class="lead my-3">Views: {{product.view_count}}</p>
+              <h6>{% if product.discount_price %}
+                &#8358; {{product.discount_price | intcomma }} <del>&#8358; {{product.price | intcomma }}</del>
+                {% else %}
+                &#8358; {{product.price | intcomma }}
+                {% endif %}</h6>
+              <p class="lead my-3">
+                {{product.description}}
+              </p>
+
+              <div class="d-grid">
+                <a href="{% url 'addtocart' product.id %}" class="btn btn-primary">Add to cart</a>
+              </div>
+            </div>
+          </div>
+        {% else %}
+          <p class="bg-danger p-3 text-white">No Product</p>
+        {% endif %}
+        
+
+    </div>
+  </section>
+
+
+
+{% endblock content %}
+
+

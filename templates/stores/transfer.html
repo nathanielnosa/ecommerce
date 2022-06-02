@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% load static %}
+{% load humanize %}
+{% block title %} Welcome :: My Cart {% endblock title %}
+{% block content %}
+
+
+<section id="product" class="py-5 my-5">
+    <div class="container my-5">
+        <p class="text-center">You are transferring the sum of {{order.amount | intcomma}}</p>
+        <div class="row">
+            <div class="col-md-5 mx-auto">
+                <div class="card p-3 my-1">
+                    <div class="card-body">
+                        <h3>GTBank</h3>
+                        <p>Mrs Uchachy</p>
+                        <p>0577051329</p>
+                    </div>
+                </div>
+                <div class="card p-3 my-1">
+                    <div class="card-body">
+                        <h3>GTBank</h3>
+                        <p>Mrs Uchachy</p>
+                        <p>0577051329</p>
+                    </div>
+                </div>
+
+                <p class="lead">
+                    Send Screenshot of your payment <br> to
+                    uchacy@selfcare.gmail.com for verification
+                </p>
+            </div>
+        </div>
+    </div>
+  </section>
+
+
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,50 @@
+{% load static %}
+<!-- navbar -->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark sticky-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="index.html">
+              <img src="{% static 'img/logo.png' %}" alt="techmeta ecommerce logo">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mynavbar">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="mynavbar">
+            <ul class="navbar-nav m-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'index' %}">HOME</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'category' %}">CATEGORY</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#lookbook">CLOTH</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#clothing">ACCESSORIES</a>
+              </li>
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link bg-danger" href="{% url 'logout' %}">LOGOUT</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">PROFILE</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'register' %}">LOGIN/REGISTER</a>
+              </li>
+              {% endif %}
+              <li class="nav-item">
+                <a href="{% url 'myCart' %}" class="nav-link"><i class="bi bi-cart"></i><span class="badge bg-danger text-white">{{count}}</span></a>
+              </li>
+             
+              
+
+            </ul>
+            <form class="d-flex" action="{% url 'search' %}" method="get">
+              <input class="form-control me-2" name="keyword" type="text" placeholder="Search">
+              <button class="btn btn-dark" type="button"><i class="bi bi-search"></i></button>
+            </form>
+          </div>
+        </div>
+    </nav>
